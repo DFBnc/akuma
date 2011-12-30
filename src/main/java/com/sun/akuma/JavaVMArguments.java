@@ -50,6 +50,8 @@ import com.sun.akuma.CLibrary.FILE;
  * @author Kohsuke Kawaguchi
  */
 public class JavaVMArguments extends ArrayList<String> {
+    private static final long serialVersionUID = 1;
+
     public JavaVMArguments() {
     }
 
@@ -118,7 +120,6 @@ public class JavaVMArguments extends ArrayList<String> {
 
         // we don't want them inherited
         args.removeSystemProperty(Daemon.class.getName());
-        args.removeSystemProperty(NetworkServer.class.getName()+".mode");
         return args;
     }
 
