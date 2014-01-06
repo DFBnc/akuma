@@ -6,7 +6,7 @@
     <version>2</version>
   </parent>
   <artifactId>akuma</artifactId>
-  <version>1.8-SNAPSHOT</version>
+  <version>1.10-SNAPSHOT</version>
   <name>Embeddable daemonization library</name>
 
   <scm>
@@ -53,7 +53,7 @@
     <dependency>
       <groupId>net.java.dev.jna</groupId>
       <artifactId>jna</artifactId>
-      <version>3.0.9</version>
+      <version>3.4.0</version>
     </dependency>
   </dependencies>
 
@@ -64,19 +64,6 @@
       </plugin>
     </plugins>
   </reporting>
-
-  <repositories>
-    <repository>
-      <id>m.g.o-public</id>
-      <url>http://maven.glassfish.org/content/groups/public/</url>
-    </repository>
-  </repositories>
-  <pluginRepositories>
-    <pluginRepository>
-      <id>m.g.o-public</id>
-      <url>http://maven.glassfish.org/content/groups/public/</url>
-    </pluginRepository>
-  </pluginRepositories>
 
   <licenses>
     <license>
