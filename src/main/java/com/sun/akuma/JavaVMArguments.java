@@ -378,15 +378,15 @@ public class JavaVMArguments extends ArrayList<String> {
         final int KERN_ARGMAX = 8;
         final int KERN_PROCARGS2 = 49;
         final int sizeOfInt = Native.getNativeSize(int.class);
-        IntByReference _ = new IntByReference();
+        IntByReference ibr = new IntByReference();
 
 
         IntByReference argmaxRef = new IntByReference(0);
         IntByReference size = new IntByReference(sizeOfInt);
 
         // for some reason, I was never able to get sysctlbyname work.
-//        if(LIBC.sysctlbyname("kern.argmax", argmaxRef.getPointer(), size, NULL, _)!=0)
-        if(LIBC.sysctl(new int[]{CTL_KERN,KERN_ARGMAX},2, argmaxRef.getPointer(), size, NULL, _)!=0)
+//        if(LIBC.sysctlbyname("kern.argmax", argmaxRef.getPointer(), size, NULL, ibr)!=0)
+        if(LIBC.sysctl(new int[]{CTL_KERN,KERN_ARGMAX},2, argmaxRef.getPointer(), size, NULL, ibr)!=0)
             throw new UnsupportedOperationException("Failed to get kernl.argmax: "+LIBC.strerror(Native.getLastError()));
 
         int argmax = argmaxRef.getValue();
@@ -425,7 +425,7 @@ public class JavaVMArguments extends ArrayList<String> {
         }
         StringArrayMemory m = new StringArrayMemory(argmax);
         size.setValue(argmax);
-        if(LIBC.sysctl(new int[]{CTL_KERN,KERN_PROCARGS2,resolvePID(pid)},3, m, size, NULL, _)!=0)
+        if(LIBC.sysctl(new int[]{CTL_KERN,KERN_PROCARGS2,resolvePID(pid)},3, m, size, NULL, ibr)!=0)
             throw new UnsupportedOperationException("Failed to obtain ken.procargs2: "+LIBC.strerror(Native.getLastError()));
 
 
@@ -492,19 +492,19 @@ public class JavaVMArguments extends ArrayList<String> {
         final int KERN_PROC = 14;
         final int KERN_PROC_ARGS = 7;
 
-        IntByReference _ = new IntByReference();
+        IntByReference ibr = new IntByReference();
         IntByReference sysctlArgMax = new IntByReference();
         IntByReference size = new IntByReference();
 
         size.setValue(4);
-        if( LIBC.sysctl(new int[]{CTL_KERN, KERN_ARGMAX}, 2, sysctlArgMax.getPointer(), size, NULL, _) != 0)
+        if( LIBC.sysctl(new int[]{CTL_KERN, KERN_ARGMAX}, 2, sysctlArgMax.getPointer(), size, NULL, ibr) != 0)
             throw new UnsupportedOperationException("Failed to sysctl kern.argmax");
 
         int argmax = sysctlArgMax.getValue();
         Memory m = new Memory(argmax);
         size.setValue(argmax);
 
-        if( LIBC.sysctl(new int[]{CTL_KERN,KERN_PROC, KERN_PROC_ARGS, resolvePID(pid)}, 4, m, size, NULL, _) != 0)
+        if( LIBC.sysctl(new int[]{CTL_KERN,KERN_PROC, KERN_PROC_ARGS, resolvePID(pid)}, 4, m, size, NULL, ibr) != 0)
             throw new UnsupportedOperationException("");
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
