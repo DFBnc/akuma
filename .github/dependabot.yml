@@ -1,9 +1,17 @@
 version: 2
 updates:
 - package-ecosystem: maven
-  directory: "/"
+  directory: /
   schedule:
     interval: daily
   open-pull-requests-limit: 10
   cooldown:
     default-days: 32 # Slightly over 1 month
+  groups:
+    maven-minor-patch:
+      update-types:
+      - minor
+      - patch
+    maven-major:
+      update-types:
+      - major
